@@ -1,28 +1,22 @@
-import React from "react";
-import PostForm from "../components/PostForm";
-import PostCard from "../components/PostCard";
-
-const dummy = {
-  isLoggedIn: true,
-  imagePaths: [],
-  mainPosts: [
-    {
-      User: {
-        id: 1,
-        nickname: "넛지"
-      },
-      content: "이새기 뭐라는지 하나도 모르겠네",
-      img:
-        "https://mblogthumb-phinf.pstatic.net/MjAxNzA3MDNfMTkg/MDAxNDk5MDU5MDAyNzUw.Sfl9pMVF4t05vyKTIaZNopbUlEhYJSqWu_QlmihW-Lsg.HAS5NsYee9lAZDbrbZvaIm0iz70gCqZliVyGa6TnHfUg.JPEG.dlgydnjs2004/16790130_1762078090786540_944302028073467904_n.jpg?type=w800"
-    }
-  ]
-};
+import React from 'react';
+import { useSelector } from 'react-redux';
+import PostCard from '../components/PostCard';
+import PostForm from '../components/PostForm';
 
 const Home = () => {
+  const { user, isLoggedIn } = useSelector(state => state.user);
+  const { mainPosts } = useSelector(state => state.post);
+
   return (
     <div>
-      {dummy.isLoggedIn && <PostForm />}
-      {dummy.mainPosts.map(c => (
+      {user ? (
+        <div>
+          로그인 했습니다 :
+          {user.nickname}
+        </div>
+      ) : <div>로그아웃 했습니다.</div>}
+      {isLoggedIn && <PostForm />}
+      {mainPosts.map(c => (
         <PostCard key={c} post={c} />
       ))}
     </div>

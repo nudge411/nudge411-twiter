@@ -1,19 +1,14 @@
-import React from "react";
-import Link from "next/link";
-import PropTypes from "prop-types";
-import LoginForm from "./LoginForm";
-import UserProfile from "./UserProfile";
-import { Menu, Input, Row, Col } from "antd";
-
-const dummy = {
-  nickname: "Nudge411",
-  Post: [],
-  Followings: [],
-  Followers: [],
-  isLoggedIn: false
-};
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { Menu, Input, Row, Col } from 'antd';
+import LoginForm from './LoginForm';
+import UserProfile from './UserProfile';
 
 const AppLayout = ({ children }) => {
+  const { isLoggedIn } = useSelector(state => state.user);
   return (
     <div>
       <Menu mode="horizontal">
@@ -28,12 +23,12 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item key="mail">
-          <Input.Search enterButton style={{ verticalAlign: "middle" }} />
+          <Input.Search enterButton style={{ verticalAlign: 'middle' }} />
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {dummy.isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
@@ -49,7 +44,7 @@ const AppLayout = ({ children }) => {
 };
 
 AppLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node.isRequired,
 };
 
 export default AppLayout;
